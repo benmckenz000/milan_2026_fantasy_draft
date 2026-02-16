@@ -18,32 +18,32 @@ def get_medal_data():
     # Feb 16 base standings
     return {
         "USA": {"gold": 5, "silver": 8, "bronze": 4},
-        "Slovenia": {"gold": 2, "silver": 1, "bronze": 1},
+        "SLO": {"gold": 2, "silver": 1, "bronze": 1},
         
-        "Norway": {"gold": 12, "silver": 7, "bronze": 8},
-        "South Korea": {"gold": 1, "silver": 2, "bronze": 3},
+        "NOR": {"gold": 12, "silver": 7, "bronze": 8},
+        "KOR": {"gold": 1, "silver": 2, "bronze": 3},
         
-        "Italy": {"gold": 8, "silver": 4, "bronze": 10},
-        "Netherlands": {"gold": 6, "silver": 5, "bronze": 1},
+        "ITA": {"gold": 8, "silver": 4, "bronze": 10},
+        "NED": {"gold": 6, "silver": 5, "bronze": 1},
         
-        "Germany": {"gold": 4, "silver": 6, "bronze": 5},
-        "Austria": {"gold": 4, "silver": 7, "bronze": 3},
+        "GER": {"gold": 4, "silver": 6, "bronze": 5},
+        "AUT": {"gold": 4, "silver": 7, "bronze": 3},
         
-        "France": {"gold": 4, "silver": 7, "bronze": 4},
-        "Japan": {"gold": 3, "silver": 5, "bronze": 9}, 
+        "FRA": {"gold": 4, "silver": 7, "bronze": 4},
+        "JPN": {"gold": 3, "silver": 5, "bronze": 9}, 
         
-        "Canada": {"gold": 1, "silver": 4, "bronze": 5},
-        "Sweden": {"gold": 5, "silver": 5, "bronze": 1},
+        "CAN": {"gold": 1, "silver": 4, "bronze": 5},
+        "SWE": {"gold": 5, "silver": 5, "bronze": 1},
     }
 
 def update_leaderboard():
     draft = {
-        "AF": ["USA", "Slovenia"],
-        "CM": ["Norway", "South Korea"],
-        "AS & SD": ["Italy", "Netherlands"],
-        "KT": ["Germany", "Austria"],
-        "ZG": ["France", "Japan"],
-        "JC": ["Canada", "Sweden"],
+        "AF": ["USA", "SLO"],
+        "CM": ["NOR", "KOR"],
+        "AS & SD": ["ITA", "NED"],
+        "KT": ["GER", "AUT"],
+        "ZG": ["FRA", "JPN"],
+        "JC": ["CAN", "SWE"],
     }
     
     stats = get_medal_data()
@@ -51,10 +51,10 @@ def update_leaderboard():
 
     utc_now = datetime.datetime.now(pytz.utc)
     est_tz = pytz.timezone('US/Eastern')
-    est_now = utc_now.astimezone(est_tz).strftime("%Y-%m-%d %I:%M %p") # Use %I:%M %p for 12-hour AM/PM
+    est_now = utc_now.astimezone(est_tz).strftime("%Y-%m-%d %I:%M %p") 
 
     sheet.append_row([f"Last Updated: {est_now} EST"])
-    sheet.append_row([]) # Blank row for spacing
+    sheet.append_row([])
     sheet.append_row(["Rank", "Name", "Total", "Gold", "Silver", "Bronze", "Gold Breakdown", "Silver Breakdown", "Bronze Breakdown"])
 
     final_list = []
