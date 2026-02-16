@@ -3,3 +3,4 @@ google-auth
 pytz
 requests
 beautifulsoup4
+streamlit-autorefresh
