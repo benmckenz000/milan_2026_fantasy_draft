@@ -24,7 +24,7 @@ st_autorefresh(interval=300_000, key="datarefresh")  # 300_000 ms = 5 min
 # Title & Subtitle
 # -------------------
 st.title("Olympic Fantasy Draft Leaderboard")
-st.markdown("# Benjamin McKenzie")
+st.markdown("### Benjamin McKenzie")
 
 # -------------------
 # Google Sheets Authentication via st.secrets
@@ -85,11 +85,12 @@ else:
     else:  # Total Medals
         df_chart_display = df_chart_display.sort_values("Total Medals", ascending=False)
         chart_col = "Total Medals"
-        # Hide the Score column in table if exists
-        if "Score" in df_chart_display.columns:
-            df_table_display = df_chart_display.drop(columns=["Score"])
-        else:
-            df_table_display = df_chart_display.copy()
+        # Hide the Weighted Score column in table if it exists
+    if "Weighted Score" in df_chart_display.columns:
+        df_table_display = df_chart_display.drop(columns=["Weighted Score"])
+    else:
+        df_table_display = df_chart_display.copy()
+
 
     # -------------------
     # Display Leaderboard Table
