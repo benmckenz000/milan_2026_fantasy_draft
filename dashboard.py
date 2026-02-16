@@ -11,7 +11,6 @@ import datetime
 # -------------------
 st.set_page_config(
     page_title="Olympic Fantasy Draft Tracker",
-    page_icon="🥇",
     layout="wide"
 )
 
@@ -20,7 +19,7 @@ st.set_page_config(
 # -------------------
 st_autorefresh(interval=300_000, key="datarefresh")  # 300_000 ms = 5 min
 
-st.title("🥇 Olympic Fantasy Draft Leaderboard")
+st.title("Olympic Fantasy Draft Leaderboard")
 
 # -------------------
 # Google Sheets Authentication via st.secrets
@@ -56,7 +55,7 @@ else:
     # -------------------
     try:
         last_update_cell = sheet.acell('A1').value
-        st.markdown(f"**Last Updated:** {last_update_cell}")
+        st.markdown(f"** {last_update_cell}**")
     except:
         st.markdown(f"**Last Checked:** {datetime.datetime.now().strftime('%m/%d/%Y %I:%M %p')}")
 
@@ -64,24 +63,28 @@ else:
     # Select Ranking Method
     # -------------------
     scoring_mode = st.selectbox(
-        "Select Ranking Method",
-        ["Total Medals", "Weighted Score (3-2-1)"]
-    )
+    "Select Ranking Method",
+    ["Total Medals", "Weighted Score (3-2-1)"]
+)
 
+    # Compute weighted score if needed
     if scoring_mode == "Weighted Score (3-2-1)":
         if "Score" not in df.columns:
             df["Score"] = df["Gold"]*3 + df["Silver"]*2 + df["Bronze"]*1
-        df = df.sort_values("Score", ascending=False)
+        df_display = df.sort_values("Score", ascending=False)
+        chart_col = "Score"
     else:
-        df = df.sort_values("Total Medals", ascending=False)
+        df_display = df.sort_values("Total Medals", ascending=False)
+        chart_col = "Total Medals"
 
-    # -------------------
-    # Display Leaderboard Table
-    # -------------------
-    st.dataframe(df, use_container_width=True)
+# -------------------
+# Display Leaderboard Table
+# -------------------
+    st.dataframe(df_display, use_container_width=True)
 
-    # -------------------
-    # Display Bar Chart
-    # -------------------
-    st.subheader("Total Medals by Player")
-    st.bar_chart(df.set_index("Name")["Total Medals"])
+# -------------------
+# Display Bar Chart dynamically
+# -------------------
+    st.subheader(f"{chart_col} by Player")
+    df_chart = df_display.set_index("Name")  # already sorted descending
+    st.bar_chart(df_chart[chart_col])
