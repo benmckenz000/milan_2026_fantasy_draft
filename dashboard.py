@@ -7,7 +7,7 @@ from streamlit_autorefresh import st_autorefresh
 import datetime
 
 # -------------------
-# Streamlit Page Config
+# Page Config
 # -------------------
 st.set_page_config(
     page_title="Olympic Fantasy Draft Tracker",
@@ -18,11 +18,8 @@ st.set_page_config(
 # -------------------
 # Auto-refresh every 5 minutes
 # -------------------
-st_autorefresh(interval=300000, key="datarefresh")
+st_autorefresh(interval=300_000, key="datarefresh")  # 300_000 ms = 5 min
 
-# -------------------
-# Title
-# -------------------
 st.title("🥇 Olympic Fantasy Draft Leaderboard")
 
 # -------------------
@@ -36,11 +33,11 @@ try:
     creds = Credentials.from_service_account_info(creds_json, scopes=scope)
     client = gspread.authorize(creds)
 except Exception as e:
-    st.error(f"Google Sheets Authentication Failed: {e}")
+    st.error(f"Failed to authenticate Google Sheets: {e}")
     st.stop()
 
 # -------------------
-# Pull Data from Sheet
+# Fetch Data from Google Sheet
 # -------------------
 try:
     sheet = client.open("Olympic_Fantasy_Draft_2026").sheet1
@@ -52,21 +49,19 @@ except Exception as e:
 df = pd.DataFrame(data)
 
 if df.empty:
-    st.warning("No data found in Google Sheet.")
+    st.warning("No data found in the Google Sheet.")
 else:
     # -------------------
-    # Last Updated Timestamp
+    # Display Last Updated Timestamp
     # -------------------
-    # Assume first row in sheet is last updated, if you include a timestamp
     try:
         last_update_cell = sheet.acell('A1').value
         st.markdown(f"**Last Updated:** {last_update_cell}")
     except:
-        # fallback to current time
         st.markdown(f"**Last Checked:** {datetime.datetime.now().strftime('%m/%d/%Y %I:%M %p')}")
-    
+
     # -------------------
-    # Toggle: Total Medals vs Weighted Score
+    # Select Ranking Method
     # -------------------
     scoring_mode = st.selectbox(
         "Select Ranking Method",
@@ -75,19 +70,18 @@ else:
 
     if scoring_mode == "Weighted Score (3-2-1)":
         if "Score" not in df.columns:
-            # Calculate weighted score if missing
             df["Score"] = df["Gold"]*3 + df["Silver"]*2 + df["Bronze"]*1
         df = df.sort_values("Score", ascending=False)
     else:
         df = df.sort_values("Total Medals", ascending=False)
 
     # -------------------
-    # Display Table
+    # Display Leaderboard Table
     # -------------------
     st.dataframe(df, use_container_width=True)
 
     # -------------------
-    # Visual: Bar chart
+    # Display Bar Chart
     # -------------------
-    st.subheader("Total Medals by Person")
+    st.subheader("Total Medals by Player")
     st.bar_chart(df.set_index("Name")["Total Medals"])
