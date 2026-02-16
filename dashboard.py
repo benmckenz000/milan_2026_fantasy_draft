@@ -42,7 +42,7 @@ except Exception as e:
 # -------------------
 try:
     sheet = client.open("Olympic_Fantasy_Draft_2026").sheet1
-    data = sheet.get_all_records(head = 2)
+    data = sheet.get_all_records(head=2)
 except Exception as e:
     st.error(f"Failed to fetch data from Google Sheet: {e}")
     st.stop()
@@ -57,50 +57,48 @@ else:
     # -------------------
     try:
         last_update_cell = sheet.acell('A1').value
-        st.markdown(f"{last_update_cell}")
+        st.markdown(f"**Last Updated:** {last_update_cell}")
     except:
         st.markdown(f"**Last Checked:** {datetime.datetime.now().strftime('%m/%d/%Y %I:%M %p')}")
 
-# -------------------
-# Select Ranking Method
-# -------------------
+    # -------------------
+    # Select Ranking Method
+    # -------------------
     scoring_mode = st.selectbox(
         "Select Ranking Method",
         ["Total Medals", "Weighted Score (3-2-1)"]
-)
+    )
 
-# Compute weighted score if needed
-if scoring_mode == "Weighted Score (3-2-1)":
-    if "Score" not in df.columns:
-        df["Score"] = df["Gold"]*3 + df["Silver"]*2 + df["Bronze"]*1
-    df_display = df.sort_values("Score", ascending=False)
-    chart_col = "Score"
-else:
-    df_display = df.sort_values("Total Medals", ascending=False)
-    chart_col = "Total Medals"
-    # Hide the Score column if it exists
-    if "Score" in df_display.columns:
-        df_display = df_display.drop(columns=["Score"])
+    # -------------------
+    # Compute weighted score if needed
+    # -------------------
+    if scoring_mode == "Weighted Score (3-2-1)":
+        if "Score" not in df.columns:
+            df["Score"] = df["Gold"]*3 + df["Silver"]*2 + df["Bronze"]*1
+        df_display = df.sort_values("Score", ascending=False)
+        chart_col = "Score"
+    else:  # Total Medals mode
+        df_display = df.sort_values("Total Medals", ascending=False)
+        chart_col = "Total Medals"
+        # Hide the Score column only for table display
+        if "Score" in df_display.columns:
+            df_display = df_display.drop(columns=["Score"])
 
-
-
-# -------------------
-# Display Leaderboard Table
-# -------------------
+    # -------------------
+    # Display Leaderboard Table
+    # -------------------
     st.dataframe(df_display, use_container_width=True)
 
-# -------------------
-# Display Bar Chart dynamically (left→right descending)
-# -------------------
-import altair as alt
+    # -------------------
+    # Display Bar Chart dynamically (left→right descending)
+    # -------------------
+    st.subheader(f"{chart_col} by Person")
+    df_chart = df_display[["Name", chart_col]].sort_values(chart_col, ascending=False)
 
-st.subheader(f"{chart_col} by Person")
-df_chart = df_display[["Name", chart_col]].sort_values(chart_col, ascending=False)
+    chart = alt.Chart(df_chart).mark_bar().encode(
+        x=alt.X("Name", sort=None),  # preserve descending order from DataFrame
+        y=chart_col,
+        tooltip=["Name", chart_col]
+    )
 
-chart = alt.Chart(df_chart).mark_bar().encode(
-    x=alt.X("Name", sort=None),  # preserve descending order from DataFrame
-    y=chart_col,
-    tooltip=["Name", chart_col]
-)
-
-st.altair_chart(chart, use_container_width=True)
+    st.altair_chart(chart, use_container_width=True)
