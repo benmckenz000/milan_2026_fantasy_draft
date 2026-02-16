@@ -1,13 +1,10 @@
-# Milan-Cortina 2026 Winter Olympics Medal Tracker
 # 2026 Winter Olympics: Automated Fantasy Leaderboard
 **An end-to-end data pipeline that pulls live medal standings for the 2026 Winter Olympics and updates a real-time leaderboard in Google Sheets**
 
----
 
 ## Overview
 This project automates the scoring and reporting for a 2026 Winter Olympics Fantasy Draft. This pipeline scrapes the real-time medal standings from Wikipedia, calculates each participant's total medal count across their two countries, ranks the leaderboard, and pushes the results to a live Google Sheet every hour.
 
----
 
 ## Project Architecture (ETL)
 This project follows a classic **ETL** pattern:
@@ -18,7 +15,6 @@ This project follows a classic **ETL** pattern:
     * **Ranking:** Implements a sorting algorithm to rank the leaderboard in descending order based on total medal count.
 3.  **Load:** Leverages the `gspread` library and **Google Cloud Service** to push cleaned data into the Google Sheets API.
 
----
 
 ## Stack & Skills
 * **Language:** Python 3.14.3
@@ -27,6 +23,5 @@ This project follows a classic **ETL** pattern:
 * **Security:** Manages Google Cloud credentials using **GitHub Secrets** to ensure environment variables aren't visible in the source code.
 * **DevOps:** Includes robust error handling (`try-except` blocks) to ensure pipeline stability during network timeouts or source data fluctuations.
 
----
 
 
