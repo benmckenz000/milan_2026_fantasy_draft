@@ -21,7 +21,7 @@ st.set_page_config(
 st_autorefresh(interval=300_000, key="datarefresh")  # 300_000 ms = 5 min
 
 st.title("Olympic Fantasy Draft Leaderboard")
-st.markdown("## Benjamin McKenzi")
+st.markdown("# Benjamin McKenzie")
 
 # -------------------
 # Google Sheets Authentication via st.secrets
@@ -69,20 +69,35 @@ else:
         ["Total Medals", "Weighted Score (3-2-1)"]
     )
 
-    # -------------------
     # Compute weighted score if needed
-    # -------------------
-    if scoring_mode == "Weighted Score (3-2-1)":
-        if "Score" not in df.columns:
-            df["Score"] = df["Gold"]*3 + df["Silver"]*2 + df["Bronze"]*1
-        df_display = df.sort_values("Score", ascending=False)
-        chart_col = "Score"
-    else:  # Total Medals mode
-        df_display = df.sort_values("Total Medals", ascending=False)
-        chart_col = "Total Medals"
-        # Hide the Score column only for table display
-        if "Score" in df_display.columns:
-            df_display = df_display.drop(columns=["Score"])
+if scoring_mode == "Weighted Score (3-2-1)":
+    if "Score" not in df.columns:
+        df["Score"] = df["Gold"]*3 + df["Silver"]*2 + df["Bronze"]*1
+    df_display = df.sort_values("Score", ascending=False)
+    chart_col = "Score"
+    df_table = df_display.copy()  # table shows all columns
+else:  # Total Medals mode
+    df_display = df.sort_values("Total Medals", ascending=False)
+    chart_col = "Total Medals"
+    # For table, drop the Score column if it exists
+    df_table = df_display.drop(columns=["Score"]) if "Score" in df_display.columns else df_display.copy()
+
+# Display table using df_table
+    st.dataframe(df_table, use_container_width=True)
+
+# -------------------
+# Bar chart uses df_display so Score still works for Weighted Score mode
+    st.subheader(f"{chart_col} by Participant")
+    df_chart = df_display[["Name", chart_col]].sort_values(chart_col, ascending=False)
+
+    chart = alt.Chart(df_chart).mark_bar().encode(
+        x=alt.X("Name", sort=None),
+        y=chart_col,
+        tooltip=["Name", chart_col]
+)
+
+    st.altair_chart(chart, use_container_width=True)
+
 
     # -------------------
     # Display Leaderboard Table
