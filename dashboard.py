@@ -41,7 +41,7 @@ except Exception as e:
 # -------------------
 try:
     sheet = client.open("Olympic_Fantasy_Draft_2026").sheet1
-    data = sheet.get_all_records()
+    data = sheet.get_all_records(head = 2)
 except Exception as e:
     st.error(f"Failed to fetch data from Google Sheet: {e}")
     st.stop()
