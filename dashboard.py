@@ -1,10 +1,16 @@
 import streamlit as st
-import pandas as pd
-import gspread
-import os
 import json
 from google.oauth2.service_account import Credentials
-from streamlit_autorefresh import st_autorefresh 
+import gspread
+
+scope = ["https://www.googleapis.com/auth/spreadsheets",
+         "https://www.googleapis.com/auth/drive"]
+
+# Use st.secrets
+creds_json = json.loads(st.secrets["GCP_CREDS"])
+creds = Credentials.from_service_account_info(creds_json, scopes=scope)
+client = gspread.authorize(creds)
+
 
 st.set_page_config(
     page_title="Olympic Fantasy Tracker",
