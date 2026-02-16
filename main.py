@@ -62,7 +62,7 @@ def update_leaderboard(): #assigning countries to each person
     draft = {
         "AF": ["USA", "SLO"],
         "CM": ["NOR", "KOR"],
-        "AS & SD": ["ITA", "NED"],
+        "AS": ["ITA", "NED"],
         "SD": ["SUI", "CHN"],
         "KT": ["GER", "AUT"],
         "ZG": ["FRA", "JPN"],
