@@ -71,7 +71,7 @@ def update_leaderboard(): #assigning countries to each person
     
     stats = get_medal_data() # pull live numbers 
     if not stats:
-        print("Scraper failed to find data. Check URL or table structure.")
+        print("Data not found")
         return
     sheet.clear() # clear sheet for fresh numbers
 
@@ -83,7 +83,7 @@ def update_leaderboard(): #assigning countries to each person
     # add timestamp and column headers
     sheet.append_row([f"Last Updated: {est_now} EST"])
     sheet.append_row([]) 
-    sheet.append_row(["Rank", "Name", "Total", "Gold", "Silver", "Bronze", "Gold Breakdown", "Silver Breakdown", "Bronze Breakdown"])
+    sheet.append_row(["Rank", "Name", "Total Medals", "Score", "Gold", "Silver", "Bronze", "Gold Breakdown", "Silver Breakdown", "Bronze Breakdown"])
 
     final_list = [] # empty list holds final total scores
     for name, countries in draft.items(): # loop through each person in draft
@@ -97,11 +97,14 @@ def update_leaderboard(): #assigning countries to each person
             b_details.append(f"{c}: {m['bronze']}B")
 
         total = g + s + b # add total medals per person
+
+        weighted = (3 * g) + (2 * s) + (1 * b)
+
         # bundle everything into one list representing row on sheet. 
-        final_list.append([name, total, g, s, b, " | ".join(g_details), " | ".join(s_details), " | ".join(b_details)]) # puts columns in order
+        final_list.append([name, total, weighted, g, s, b, " | ".join(g_details), " | ".join(s_details), " | ".join(b_details)]) # puts columns in order
 
     # Sort by total medals descending order
-    final_list.sort(key=lambda x: x[1], reverse=True)
+    final_list.sort(key=lambda x: (x[1], x[2]), reverse=True)
 
     # push each group to google sheet
     for idx, row in enumerate(final_list, start=1):
