@@ -20,7 +20,7 @@ This project follows a classic **ETL** pattern:
 
 ---
 
-## 🛠️ Technical Stack & Skills
+## Stack & Skills
 * **Language:** Python 3.14.3
 * **Libraries:** `BeautifulSoup4`, `gspread`, `pytz`, `requests`
 * **Automation:** Deployed via **GitHub Actions** using `cron` scheduling for hourly updates.
