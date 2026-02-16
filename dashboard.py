@@ -5,6 +5,7 @@ import json
 from google.oauth2.service_account import Credentials
 from streamlit_autorefresh import st_autorefresh
 import datetime
+import altair as alt
 
 # -------------------
 # Page Config
@@ -53,38 +54,47 @@ else:
     # -------------------
     # Display Last Updated Timestamp
     # -------------------
-    try:
-        last_update_cell = sheet.acell('A1').value
-        st.markdown(f"** {last_update_cell}**")
-    except:
-        st.markdown(f"**Last Checked:** {datetime.datetime.now().strftime('%m/%d/%Y %I:%M %p')}")
+try:
+    last_update_cell = sheet.acell('A1').value
+    st.markdown(f"**Last Updated:** {last_update_cell}")
+except:
+    st.markdown(f"**Last Checked:** {datetime.datetime.now().strftime('%m/%d/%Y %I:%M %p')}")
 
-    # -------------------
-    # Select Ranking Method
-    # -------------------
-    scoring_mode = st.selectbox(
+# -------------------
+# Select Ranking Method
+# -------------------
+scoring_mode = st.selectbox(
     "Select Ranking Method",
     ["Total Medals", "Weighted Score (3-2-1)"]
 )
 
-    # Compute weighted score if needed
-    if scoring_mode == "Weighted Score (3-2-1)":
-        if "Score" not in df.columns:
-            df["Score"] = df["Gold"]*3 + df["Silver"]*2 + df["Bronze"]*1
-        df_display = df.sort_values("Score", ascending=False)
-        chart_col = "Score"
-    else:
-        df_display = df.sort_values("Total Medals", ascending=False)
-        chart_col = "Total Medals"
+# Compute weighted score if needed
+if scoring_mode == "Weighted Score (3-2-1)":
+    if "Score" not in df.columns:
+        df["Score"] = df["Gold"]*3 + df["Silver"]*2 + df["Bronze"]*1
+    df_display = df.sort_values("Score", ascending=False)
+    chart_col = "Score"
+else:
+    df_display = df.sort_values("Total Medals", ascending=False)
+    chart_col = "Total Medals"
 
 # -------------------
 # Display Leaderboard Table
 # -------------------
-    st.dataframe(df_display, use_container_width=True)
+st.dataframe(df_display, use_container_width=True)
 
 # -------------------
-# Display Bar Chart dynamically
+# Display Bar Chart dynamically (left→right descending)
 # -------------------
-    st.subheader(f"{chart_col} by Player")
-    df_chart = df_display.set_index("Name")  # already sorted descending
-    st.bar_chart(df_chart[chart_col])
+import altair as alt
+
+st.subheader(f"{chart_col} by Player")
+df_chart = df_display[["Name", chart_col]].sort_values(chart_col, ascending=False)
+
+chart = alt.Chart(df_chart).mark_bar().encode(
+    x=alt.X("Name", sort=None),  # preserve descending order from DataFrame
+    y=chart_col,
+    tooltip=["Name", chart_col]
+)
+
+st.altair_chart(chart, use_container_width=True)
