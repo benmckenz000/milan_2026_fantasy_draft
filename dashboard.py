@@ -54,34 +54,34 @@ else:
     # -------------------
     # Display Last Updated Timestamp
     # -------------------
-try:
-    last_update_cell = sheet.acell('A1').value
-    st.markdown(f"**Last Updated:** {last_update_cell}")
-except:
-    st.markdown(f"**Last Checked:** {datetime.datetime.now().strftime('%m/%d/%Y %I:%M %p')}")
+    try:
+        last_update_cell = sheet.acell('A1').value
+        st.markdown(f"**Last Updated:** {last_update_cell}")
+    except:
+        st.markdown(f"**Last Checked:** {datetime.datetime.now().strftime('%m/%d/%Y %I:%M %p')}")
 
 # -------------------
 # Select Ranking Method
 # -------------------
-scoring_mode = st.selectbox(
-    "Select Ranking Method",
-    ["Total Medals", "Weighted Score (3-2-1)"]
+    scoring_mode = st.selectbox(
+        "Select Ranking Method",
+        ["Total Medals", "Weighted Score (3-2-1)"]
 )
 
 # Compute weighted score if needed
-if scoring_mode == "Weighted Score (3-2-1)":
-    if "Score" not in df.columns:
-        df["Score"] = df["Gold"]*3 + df["Silver"]*2 + df["Bronze"]*1
-    df_display = df.sort_values("Score", ascending=False)
-    chart_col = "Score"
-else:
-    df_display = df.sort_values("Total Medals", ascending=False)
-    chart_col = "Total Medals"
+    if scoring_mode == "Weighted Score (3-2-1)":
+        if "Score" not in df.columns:
+            df["Score"] = df["Gold"]*3 + df["Silver"]*2 + df["Bronze"]*1
+        df_display = df.sort_values("Score", ascending=False)
+        chart_col = "Score"
+    else:
+        df_display = df.sort_values("Total Medals", ascending=False)
+        chart_col = "Total Medals"
 
 # -------------------
 # Display Leaderboard Table
 # -------------------
-st.dataframe(df_display, use_container_width=True)
+    st.dataframe(df_display, use_container_width=True)
 
 # -------------------
 # Display Bar Chart dynamically (left→right descending)
