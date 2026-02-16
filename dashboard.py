@@ -56,7 +56,7 @@ else:
     # -------------------
     try:
         last_update_cell = sheet.acell('A1').value
-        st.markdown(f"**Last Updated:** {last_update_cell}")
+        st.markdown(f"{last_update_cell}")
     except:
         st.markdown(f"**Last Checked:** {datetime.datetime.now().strftime('%m/%d/%Y %I:%M %p')}")
 
@@ -88,7 +88,7 @@ else:
 # -------------------
 import altair as alt
 
-st.subheader(f"{chart_col} by Player")
+st.subheader(f"{chart_col} by Person")
 df_chart = df_display[["Name", chart_col]].sort_values(chart_col, ascending=False)
 
 chart = alt.Chart(df_chart).mark_bar().encode(
