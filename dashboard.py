@@ -11,7 +11,7 @@ import altair as alt
 # Page Config
 # -------------------
 st.set_page_config(
-    page_title="Olympic Fantasy Draft Tracker",
+    page_title="2026 Winter Olympics Fantasy Draft Tracker",
     layout="wide"
 )
 
@@ -21,6 +21,7 @@ st.set_page_config(
 st_autorefresh(interval=300_000, key="datarefresh")  # 300_000 ms = 5 min
 
 st.title("Olympic Fantasy Draft Leaderboard")
+st.markdown("## Benjamin McKenzi")
 
 # -------------------
 # Google Sheets Authentication via st.secrets
@@ -69,14 +70,19 @@ else:
 )
 
 # Compute weighted score if needed
-    if scoring_mode == "Weighted Score (3-2-1)":
-        if "Score" not in df.columns:
-            df["Score"] = df["Gold"]*3 + df["Silver"]*2 + df["Bronze"]*1
-        df_display = df.sort_values("Score", ascending=False)
-        chart_col = "Score"
-    else:
-        df_display = df.sort_values("Total Medals", ascending=False)
-        chart_col = "Total Medals"
+if scoring_mode == "Weighted Score (3-2-1)":
+    if "Score" not in df.columns:
+        df["Score"] = df["Gold"]*3 + df["Silver"]*2 + df["Bronze"]*1
+    df_display = df.sort_values("Score", ascending=False)
+    chart_col = "Score"
+else:
+    df_display = df.sort_values("Total Medals", ascending=False)
+    chart_col = "Total Medals"
+    # Hide the Score column if it exists
+    if "Score" in df_display.columns:
+        df_display = df_display.drop(columns=["Score"])
+
+
 
 # -------------------
 # Display Leaderboard Table
