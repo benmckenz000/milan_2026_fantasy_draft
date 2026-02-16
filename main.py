@@ -34,7 +34,8 @@ def get_medal_data():
             "Norway": "NOR", "South Korea": "KOR", "Italy": "ITA", 
             "Netherlands": "NED", "United States": "USA", "Slovenia": "SLO",
             "Germany": "GER", "Austria": "AUT", "France": "FRA",
-            "Japan": "JPN", "Canada": "CAN", "Sweden": "SWE"
+            "Japan": "JPN", "Canada": "CAN", "Sweden": "SWE", "Switzerland": "SUI", 
+            "China": "CHN",
         }
 
         for row in table.find_all('tr')[1:]: # loop and grab every row but slice and skip row 1 at index 0
@@ -62,6 +63,7 @@ def update_leaderboard(): #assigning countries to each person
         "AF": ["USA", "SLO"],
         "CM": ["NOR", "KOR"],
         "AS & SD": ["ITA", "NED"],
+        "SD": ["SUI", "CHN"],
         "KT": ["GER", "AUT"],
         "ZG": ["FRA", "JPN"],
         "JC": ["CAN", "SWE"],
