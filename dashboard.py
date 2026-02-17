@@ -86,16 +86,16 @@ else:  # Total Medals
         df_table_display = df_chart_display.copy()
 
     # display leaderboard as a table
-    st.dataframe(df_table_display, use_container_width=True)
+st.dataframe(df_table_display, use_container_width=True)
 
     # Display bar chart - left to right
-    st.subheader(f"{chart_col} by Participant")
-    df_chart = df_chart_display[["Name", chart_col]].sort_values(chart_col, ascending=False)
+st.subheader(f"{chart_col} by Participant")
+df_chart = df_chart_display[["Name", chart_col]].sort_values(chart_col, ascending=False)
 
-    chart = alt.Chart(df_chart).mark_bar().encode(
-        x=alt.X("Name", sort=None),
-        y=chart_col,
-        tooltip=["Name", chart_col]
-    )
+chart = alt.Chart(df_chart).mark_bar().encode(
+    x=alt.X("Name", sort=None),
+    y=chart_col,
+    tooltip=["Name", chart_col]
+ )
 
-    st.altair_chart(chart, use_container_width=True)
+st.altair_chart(chart, use_container_width=True)
