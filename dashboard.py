@@ -14,7 +14,7 @@ st.set_page_config(
 )
 
 # set to auto-refresh every 5 minutes
-st_autorefresh(interval=300_000, key="datarefresh")  # 300_000 ms = 5 min
+st_autorefresh(interval=300_000, key="datarefresh") 
 
 
 # title and subtitle for page
