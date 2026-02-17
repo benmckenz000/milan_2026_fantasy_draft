@@ -61,29 +61,29 @@ else:
     )
 
 # make indv dataframes
-df_chart_display = df.copy()  # used for plotting
+df_chart_display = df.copy()
 
 if scoring_mode == "Weighted Score (3-2-1)":
-    if "Score" not in df_chart_display.columns:
-        df_chart_display["Score"] = (
-            df_chart_display["Gold"]*3 +
-            df_chart_display["Silver"]*2 +
-            df_chart_display["Bronze"]*1
-        )
-    df_chart_display = df_chart_display.sort_values("Score", ascending=False)
+    # Create Score column
+    df_chart_display["Score"] = (
+        df_chart_display["Gold"]*3 +
+        df_chart_display["Silver"]*2 +
+        df_chart_display["Bronze"]*1
+    )
+
     chart_col = "Score"
-    df_table_display = df_chart_display.copy()  # show all columns
+    df_chart_display = df_chart_display.sort_values(chart_col, ascending=False)
+    df_table_display = df_chart_display.copy()
 
 else:  # Total Medals
-    df_chart_display = df_chart_display.sort_values("Total Medals", ascending=False)
     chart_col = "Total Medals"
+    df_chart_display = df_chart_display.sort_values(chart_col, ascending=False)
 
-    # Hide Weighted Score only in Total Medals mode
-    if "Weighted Score" in df_chart_display.columns:
-        df_table_display = df_chart_display.drop(columns=["Weighted Score"])
+    # Only hide Score in this mode
+    if "Score" in df_chart_display.columns:
+        df_table_display = df_chart_display.drop(columns=["Score"])
     else:
         df_table_display = df_chart_display.copy()
-
 
     # display leaderboard as a table
     st.dataframe(df_table_display, use_container_width=True)
