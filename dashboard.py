@@ -19,7 +19,7 @@ st_autorefresh(interval=300_000, key="datarefresh")  # 300_000 ms = 5 min
 
 # title and subtitle for page
 st.title("Olympic Fantasy Draft Leaderboard")
-st.markdown("### Benjamin McKenzie")
+st.markdown("##### Benjamin McKenzie")
 
 
 # authenticate google sheets w/ st.secrets
