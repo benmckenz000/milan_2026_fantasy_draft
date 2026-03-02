@@ -1,5 +1,7 @@
 # 2026 Winter Olympics: Automated Fantasy Leaderboard
 
+[View Live Leaderboard](https://milan2026fantasydraft-fzhufa7m5slxf7qfspmahk.streamlit.app/)
+
 An ETL workflow that pulls live medal standings for the 2026 Winter Olympics, calculates fantasy scores and updates a Google Sheets leaderboard with a Streamlit dashboard for visualization.
 
 ## Overview
@@ -30,6 +32,7 @@ Once deployed, the system runs on a schedule without manual updates.
 - Writes results to Google Sheets via `gspread`.
 - Credentials are stored securely using GitHub Secrets.
 - Scheduled hourly with GitHub Actions (`cron`).
+- Timezone automatically converts from UTC to EST.
 
 ## Streamlit Dashboard
 
@@ -47,7 +50,7 @@ The scraping script, scheduled job, and dashboard are separated, keeping data co
 
 ## Tech Stack
 
-- Python 3.14  
+- Python 3.13  
 - pandas  
 - requests / BeautifulSoup4  
 - gspread (Google Sheets API)  
