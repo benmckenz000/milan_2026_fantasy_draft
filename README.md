@@ -4,7 +4,7 @@
 
 An ETL workflow that pulls live medal standings for the 2026 Winter Olympics, calculates fantasy scores and updates a Google Sheets leaderboard with a Streamlit dashboard for visualization.
 
-Note: The 2026 Winter Olympics have concluded. The leaderboard reflects final standings and is no longer updating.
+*Note: The 2026 Winter Olympics have concluded. The leaderboard reflects final standings and is no longer updating.*
 
 ## Overview
 
