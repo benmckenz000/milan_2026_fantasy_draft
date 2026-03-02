@@ -2,8 +2,6 @@
 
 An ETL workflow that pulls live medal standings for the 2026 Winter Olympics, calculates fantasy scores and updates a Google Sheets leaderboard with a Streamlit dashboard for visualization.
 
----
-
 ## Overview
 
 This project automates scoring for a Winter Olympics fantasy draft. Medal standings are scraped from Wikipedia, cleaned and matched to drafted countries, ranked under different scoring rules, and pushed to a shared Google Sheet.
@@ -33,8 +31,6 @@ Once deployed, the system runs on a schedule without manual updates.
 - Credentials are stored securely using GitHub Secrets.
 - Scheduled hourly with GitHub Actions (`cron`).
 
----
-
 ## Streamlit Dashboard
 
 The Streamlit app serves as the visualization layer:
@@ -49,8 +45,6 @@ The Streamlit app serves as the visualization layer:
 
 The scraping script, scheduled job, and dashboard are separated, keeping data collection and visualization independent.
 
----
-
 ## Tech Stack
 
 - Python 3.14  
@@ -59,8 +53,6 @@ The scraping script, scheduled job, and dashboard are separated, keeping data co
 - gspread (Google Sheets API)  
 - Streamlit + Altair  
 - GitHub Actions (scheduled automation)
-
----
 
 ## Future Improvements
 
