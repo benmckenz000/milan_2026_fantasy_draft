@@ -82,7 +82,6 @@ def update_leaderboard(): #assigning countries to each person
 
     # add timestamp and column headers
     sheet.append_row([f"Last Updated: {est_now} EST"])
-    sheet.append_row([]) 
     sheet.append_row(["Rank", "Name", "Total Medals", "Weighted Score", "Gold", "Silver", "Bronze", "Gold Breakdown", "Silver Breakdown", "Bronze Breakdown"])
 
     final_list = [] # empty list holds final total scores
