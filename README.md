@@ -1,28 +1,28 @@
 # 2026 Winter Olympics: Automated Fantasy Leaderboard
-**An end-to-end data pipeline that pulls live medal standings for the 2026 Winter Olympics and updates a real-time leaderboard in Google Sheets**
+A fully automated system that tracks live medal standings for the 2026 Winter Olympics and updates a fantasy draft leaderboard in Google Sheets with a Streamlit dashboard for viewing results.
 
 
 ## Overview
-This project automates the scoring and reporting for a 2026 Winter Olympics Fantasy Draft. This pipeline scrapes the real-time medal standings from Wikipedia, calculates each participant's total medal count across their two countries, ranks the leaderboard, and pushes the results to a live Google Sheet every hour.
+This project was built to automate the scoring for a Winter Olympics fantasy draft. Instead of manually updating medal counts, this pipeline scrapes the live medal standings from Wikipedia, aggregates totals for each participant's two drafted countries, ranks the results, and updates a shared Google Sheet every hour.
+The goal was to build something simple, reliable, and hands-off once deployed.
 
 
 ## Project Architecture 
-This project follows a classic **ETL** pattern:
 
-1.  **Extract:** Uses `BeautifulSoup4` and `requests` to scrape live medal tables from Wikipedia. The script is designed to navigate HTML structures and identify relevant data rows while filtering out noise (headers, summary rows, and footnotes).
+1.  **Extract:**
+   Uses `BeautifulSoup4` and `requests` to pull and parse the live medal tables from Wikipedia. The script handles irregular table formatting and filters out non-data rows like headers and summary totals.
 2.  **Transform:**
-    * **Data Cleaning:** Raw country names are normalized and mapped to official 3-letter IOC abbreviations (e.g., "Norway" - "NOR").
-    * **Aggregation:** Data is mapped to participant draft picks to calculate real-time totals, including granular breakdowns of Gold, Silver, and Bronze counts.
-    * **Ranking:** Implements a sorting algorithm to rank the leaderboard in descending order based on total medal count.
-4.  **Load:** Leverages the `gspread` library and **Google Cloud Service** to push cleaned data into the Google Sheets API.
-
+    * **Cleaning:** Country names are standardized and mapped to official 3-letter IOC abbreviations (e.g., "Norway" - "NOR") to ensure consistent joins.
+    * **Aggregation:** Medal counts are matched to each participant's drafted countries and totaled, with a breakdown of Gold, Silver, and Bronze medals.
+    * **Ranking:** The leaderboard is sorted in descending order based on total medal count, with medal type breakdown included for transparency. 
+4.  **Load:** The processed results are pushed to Google Sheets using the `gspread` library and Google Cloud Service. 
 
 ## Stack & Skills
 * **Language:** Python 3.14.3
 * **Libraries:** `BeautifulSoup4`, `gspread`, `pytz`, `requests`
-* **Automation:** Deployed via **GitHub Actions** using `cron` scheduling for hourly updates.
-* **Security:** Manages Google Cloud credentials using **GitHub Secrets** to ensure environment variables aren't visible in the source code.
-* **DevOps:** Includes robust error handling (`try-except` blocks) to ensure pipeline stability during network timeouts or source data fluctuations.
+* **Automation:** Scheduled hourly runs Deployed via GitHub Actions ( `cron`)
+* **Security:** Google Cloud credentials stored securely with GitHub Secrets.
+* **Reliability:** Error handling inluded to manage network failures or changes in structure of source table.
 
 
 
