@@ -4,4 +4,6 @@ google-auth
 pytz
 requests
 beautifulsoup4
+pandas
+altair
 streamlit-autorefresh
