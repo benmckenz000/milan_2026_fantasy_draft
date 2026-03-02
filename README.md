@@ -4,6 +4,8 @@
 
 An ETL workflow that pulls live medal standings for the 2026 Winter Olympics, calculates fantasy scores and updates a Google Sheets leaderboard with a Streamlit dashboard for visualization.
 
+Note: The 2026 Winter Olympics have concluded. The leaderboard reflects final standings and is no longer updating.
+
 ## Overview
 
 This project automates scoring for a Winter Olympics fantasy draft. Medal standings are scraped from Wikipedia, cleaned and matched to drafted countries, ranked under different scoring rules, and pushed to a shared Google Sheet.
@@ -58,10 +60,19 @@ The scraping script, scheduled job, and dashboard are separated, keeping data co
 - Streamlit + Altair  
 - GitHub Actions (scheduled automation)
 
+## Setup
+
+1. Clone the repo
+2. Install dependencies: `pip install -r requirements.txt` (or open in Codespaces / VS Code with `.devcontainer`, runs automatically)
+3. Create Google Sheet named `Olympic_Fantasy_Draft_2026` and share it with your Google Service Account email as an Editor
+4. Add Service Account JSON key as `GCP_CREDS` to both GitHub Secrets (for the scraper) and Streamlit Secrets (for the dashboard)
+5. Run locally: `streamlit run dashboard.py` (requires `.streamlit/secrets.toml` with `GCP_CREDS`)
+
 ## Future Improvements
 
-- Improve Streamlit column display logic so the Weighted Score column only appears on the weighted scoring view, while the total medals view shows medal breakdowns only.
-- Containerize for easier deployment.
+- Add historical tracking. Instead of clearing the sheet on each run, save snapshots of the leaderboard to a separate sheet, and add a line chart to Streamlit dashboard showing how ranks shifted throughout the Games.
+- Set up notifications. Push an automatic update to a groupchat when the leaderboard changes, so participants don't have to check the dashboard manually.
+- Improve visualizations. Create a Medal Breakdown stacked bar chart for each participant, showing the proportion of Gold, Silver, and Bronze medals contributing to their total.
 
 
 
