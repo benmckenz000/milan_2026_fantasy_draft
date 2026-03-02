@@ -37,12 +37,18 @@ except Exception as e:
 # pull data from google sheet
 try:
     sheet = client.open("Olympic_Fantasy_Draft_2026").sheet1
-    data = sheet.get_all_records(head=3) 
+    all_values = sheet.get_all_values()  
+    headers = all_values[2]             
+    data_rows = all_values[3:]          
+    df = pd.DataFrame(data_rows, columns=headers)
 except Exception as e:
     st.error(f"Failed to fetch data from Google Sheet: {e}")
     st.stop()
 
-df = pd.DataFrame(data)
+numeric_cols = ["Rank", "Total Medals", "Weighted Score", "Gold", "Silver", "Bronze"]
+for col in numeric_cols:
+    if col in df.columns:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
 
 if df.empty:
     st.warning("No data found in the Google Sheet.")
