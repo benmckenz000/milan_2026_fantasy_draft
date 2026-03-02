@@ -38,8 +38,8 @@ except Exception as e:
 try:
     sheet = client.open("Olympic_Fantasy_Draft_2026").sheet1
     all_values = sheet.get_all_values()  
-    headers = all_values[2]             
-    data_rows = all_values[3:]          
+    headers = all_values[1]             
+    data_rows = all_values[2:]          
     df = pd.DataFrame(data_rows, columns=headers)
     df.columns = df.columns.str.strip()
     
