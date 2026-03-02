@@ -25,6 +25,7 @@ Once deployed, the system runs on a schedule without manual updates.
   - Total Medals
   - Weighted Score (3-2-1)
 - The leaderboard is sorted based on the selected scoring method.
+- Tie-breaking: Total Medals, followed by Weighted Score, then the total count of Gold medals to ensure a definitive ranking.
 - A timestamp is added to show the last successful update.
 
 ### 3. Load
@@ -60,10 +61,8 @@ The scraping script, scheduled job, and dashboard are separated, keeping data co
 ## Future Improvements
 
 - Improve Streamlit column display logic so the Weighted Score column only appears on the weighted scoring view, while the total medals view shows medal breakdowns only.
-- Add tie-breaking rules based on gold medal counts.
 - Containerize for easier deployment.
 
----
 
 
 
