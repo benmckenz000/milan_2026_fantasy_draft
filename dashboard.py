@@ -41,6 +41,8 @@ try:
     headers = all_values[2]             
     data_rows = all_values[3:]          
     df = pd.DataFrame(data_rows, columns=headers)
+    df.columns = df.columns.str.strip()
+    
 except Exception as e:
     st.error(f"Failed to fetch data from Google Sheet: {e}")
     st.stop()
@@ -48,7 +50,7 @@ except Exception as e:
 numeric_cols = ["Rank", "Total Medals", "Weighted Score", "Gold", "Silver", "Bronze"]
 for col in numeric_cols:
     if col in df.columns:
-        df[col] = pd.to_numeric(df[col], errors="coerce")
+        df[col] = pd.to_numeric(df[col].astype(str).str.strip(), errors="coerce")  # ⬅️ added .astype(str).str.strip()
 
 if df.empty:
     st.warning("No data found in the Google Sheet.")
