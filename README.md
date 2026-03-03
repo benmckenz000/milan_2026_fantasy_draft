@@ -1,6 +1,7 @@
 # 2026 Winter Olympics: Automated Fantasy Leaderboard
 
 [View Live Leaderboard](https://milan2026fantasydraft-fzhufa7m5slxf7qfspmahk.streamlit.app/)
+*(Deployed app may sleep during inactivity)
 
 An ETL workflow that pulls live medal standings for the 2026 Winter Olympics, calculates fantasy scores and updates a Google Sheets leaderboard with a Streamlit dashboard for visualization.
 
@@ -13,6 +14,14 @@ This project automates scoring for a Winter Olympics fantasy draft. Medal standi
 A Streamlit app reads from the sheet and displays a live leaderboard that refreshes automatically. 
 
 Once deployed, the system runs on a schedule without manual updates.
+
+## Dashboard Preview
+
+### Total Medals View
+![Total Medals View](total_leaderboard.png)
+
+### Weighted Score View
+![Weighted Score View](weighted_leaderboard.png)
 
 ## Project Architecture 
 
