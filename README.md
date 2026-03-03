@@ -1,11 +1,11 @@
 # 2026 Winter Olympics: Automated Fantasy Leaderboard
 
-[View Live Leaderboard](https://milan2026fantasydraft-fzhufa7m5slxf7qfspmahk.streamlit.app/)
-*(Deployed app may sleep during inactivity)
-
 An ETL workflow that pulls live medal standings for the 2026 Winter Olympics, calculates fantasy scores and updates a Google Sheets leaderboard with a Streamlit dashboard for visualization.
 
-*Note: The 2026 Winter Olympics have concluded. The leaderboard reflects final standings and is no longer updating.*
+[View Live Leaderboard](https://milan2026fantasydraft-fzhufa7m5slxf7qfspmahk.streamlit.app/)
+*(Note: The deployed app may sleep during inactivity.)*
+
+> The 2026 Winter Olympics have concluded. The leaderboard reflects final standings and is no longer updating.
 
 ## Overview
 
