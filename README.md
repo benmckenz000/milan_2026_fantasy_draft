@@ -58,7 +58,7 @@ The Streamlit app serves as the visualization layer:
 
 The scraping script, scheduled job, and dashboard are separated, keeping data collection and visualization independent.
 
-## Tech Stack
+## Stack
 
 **Core**
 - Python 3.13  
