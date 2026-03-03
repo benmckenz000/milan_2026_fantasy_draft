@@ -18,10 +18,10 @@ Once deployed, the system runs on a schedule without manual updates.
 ## Dashboard Preview
 
 ### Total Medals View
-![Total Medals View](total_leaderboard.png)
+![Total Medals View](images/total_leaderboard.png)
 
 ### Weighted Score View
-![Weighted Score View](weighted_leaderboard.png)
+![Weighted Score View](images/weighted_leaderboard.png)
 
 ## Project Architecture 
 
