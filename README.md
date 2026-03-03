@@ -42,7 +42,7 @@ Once deployed, the system runs on a schedule without manual updates.
 - Writes results to Google Sheets via `gspread`.
 - Credentials are stored securely using GitHub Secrets.
 - Scheduled hourly with GitHub Actions (`cron`).
-- Timezone automatically converts from UTC to EST.
+- Timezone automatically converts from UTC to Eastern Time.
 
 ## Streamlit Dashboard
 
@@ -60,12 +60,23 @@ The scraping script, scheduled job, and dashboard are separated, keeping data co
 
 ## Tech Stack
 
+**Core**
 - Python 3.13  
-- pandas  
-- BeautifulSoup4 / requests
+- pandas
+
+**Data Collection**
+- requests
+- BeautifulSoup4
+
+**Google Sheets Integration**
 - gspread (Google Sheets API)  
-- Streamlit + Altair  
-- GitHub Actions (scheduled automation)
+- Streamlit + Altair
+
+**Automation & Scheduling**
+- GitHub Actions (cron)
+
+**Time Conversion**
+- pytz
 
 ## Setup
 
