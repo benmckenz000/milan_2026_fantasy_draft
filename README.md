@@ -1,15 +1,13 @@
 # 2026 Winter Olympics: Automated Fantasy Leaderboard
 
-An ETL workflow that pulls live medal standings for the 2026 Winter Olympics, calculates fantasy scores and updates a Google Sheets leaderboard with a Streamlit dashboard for visualization.
+An ETL workflow that pulls live medal standings for the 2026 Winter Olympics, calculates fantasy scores, and updates a Google Sheets leaderboard with a Streamlit dashboard.
 
 [View Live Leaderboard](https://milan2026fantasydraft-fzhufa7m5slxf7qfspmahk.streamlit.app/)
-*(Note: The deployed app may sleep during inactivity.)*
-
-> The 2026 Winter Olympics have concluded. The leaderboard reflects final standings and is no longer updating.
+*(App may sleep during inactivity. Olympics have concluded; leaderboard reflects final standings.)*
 
 ## Overview
 
-This project automates scoring for a Winter Olympics fantasy draft. Medal standings are scraped from Wikipedia, cleaned and matched to drafted countries, ranked under different scoring rules, and pushed to a shared Google Sheet.
+This project automates scoring for a Winter Olympics fantasy draft. Medal standings are scraped from Wikipedia, cleaned, and matched to drafted countries, ranked under different scoring rules, and pushed to a shared Google Sheet.
 
 A Streamlit app reads from the sheet and displays a live leaderboard that refreshes automatically. 
 
@@ -28,7 +26,7 @@ Once deployed, the system runs on a schedule without manual updates.
 ### 1. Extract
 - Uses `BeautifulSoup4` and `requests` to scrape the live medal table from Wikipedia.
 - The parser isolates country rows and excludes headers and summary rows.
-- Basic safeguards handle potential small changes in table structure. 
+- Basic safeguards handle small changes in table structure. 
 ### 2. Transform
 - Country names are standardized and mapped to IOC abbreviations.
 - Medal counts are merged with participant draft picks.
@@ -36,7 +34,7 @@ Once deployed, the system runs on a schedule without manual updates.
   - Total Medals
   - Weighted Score (3-2-1)
 - The leaderboard is sorted based on the selected scoring method.
-- Tie-breaking: Total Medals, followed by Weighted Score, then the total count of Gold medals to ensure a definitive ranking.
+- Tie-breaking order: Total Medals, then Weighted Score, then total Gold medals.
 - A timestamp is added to show the last successful update.
 
 ### 3. Load
@@ -64,7 +62,7 @@ The scraping script, scheduled job, and dashboard are separated, keeping data co
 
 - Python 3.13  
 - pandas  
-- requests / BeautifulSoup4  
+- BeautifulSoup4 / requests
 - gspread (Google Sheets API)  
 - Streamlit + Altair  
 - GitHub Actions (scheduled automation)
