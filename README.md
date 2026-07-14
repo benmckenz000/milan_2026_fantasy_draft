@@ -46,8 +46,6 @@ Once deployed, the system runs on a schedule without manual updates.
 
 ## Streamlit Dashboard
 
-The Streamlit app serves as the visualization layer:
-
 - Authenticates to Google Sheets using `st.secrets`
 - Auto-refreshes every 5 minutes
 - Allows users to toggle between Total Medals and Weighted Score
